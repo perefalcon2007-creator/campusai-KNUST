@@ -40,16 +40,30 @@ body{min-height:100vh;background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)
 </div>
 <div class="footer">Built by you from Kumasi - KNUST ❤️ | campusai-knust.vercel.app</div>
 <script>
-function send(){
- const input=document.getElementById('q');
- const box=document.getElementById('messages');
- if(!input.value.trim()) return;
- let d=document.createElement('div');d.className='msg user';d.textContent=input.value;box.appendChild(d);
- let t=input.value;input.value='';
- setTimeout(()=>{let b=document.createElement('div');b.className='msg bot';b.textContent='You asked: "'+t+'" - Real AI is coming next!';box.appendChild(b);box.scrollTop=box.scrollHeight},600);
- box.scrollTop=box.scrollHeight;
+async function send(){
+  const input=document.getElementById('q');
+  const box=document.getElementById('messages');
+  if(!input.value.trim()) return;
+  const text=input.value;
+  const userDiv=document.createElement('div'); userDiv.className='msg user'; userDiv.textContent=text;
+  box.appendChild(userDiv); input.value=''; box.scrollTop=box.scrollHeight;
+
+  const loading=document.createElement('div'); loading.className='msg bot'; loading.textContent='CampusAI dey type... ⏳';
+  box.appendChild(loading); box.scrollTop=box.scrollHeight;
+
+  try{
+    const res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message: text })
+    });
+    const data=await res.json();
+    loading.textContent=data.reply;
+  }catch(err){
+    loading.textContent='Chale error, try again - check internet';
+  }
+  box.scrollTop=box.scrollHeight;
 }
 document.getElementById('q').addEventListener('keypress',e=>{if(e.key==='Enter')send()});
-</script>
 </body>
 </html>
