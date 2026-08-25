@@ -1,30 +1,42 @@
 export default async function handler(req, res) {
-  if (req.method!== 'POST') return res.status(405).json({ error: 'POST only' });
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
   try {
     const { message } = req.body;
-    if (!message) return res.status(400).json({ error: 'No message' });
+    if (!message) return res.status(400).json({ reply: 'Type a message first' });
 
-    const systemPrompt = `You are CampusAI, expert KNUST guide. You know: all programs and cutoffs (e.g. Computer Science ~ 8-12, Medicine ~ 6-8), halls (Unity, Katanga, Africa, Independence, Queens etc), hostels in Ayeduase/Kotei/Bomso, fees, scholarships, course registration, exam tips. Answer short, friendly, with some Ghanaian slang. If you don't know exact current cutoff, give estimate and say to check official KNUST admission portal.`;
+    const prompt = `You are CampusAI, a friendly KNUST expert guide from Kumasi. Question: ${message}. Answer short, helpful, mention Ghana context.`;
 
-    const response = await fetch('https://text.pollinations.ai/openai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'openai',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
-        ],
-        max_tokens: 500
-      })
+    // Try free AI - Method 1
+    const aiRes = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`, {
+      method: 'GET',
     });
 
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || data.content || "Chale, network slow, try again.";
+    let reply = await aiRes.text();
+    
+    if (!reply || reply.length < 5) {
+      reply = `KNUST is Kwame Nkrumah University of Science and Technology in Kumasi, Ghana! It's Ghana's top science and tech university. For "${message}" - The best place to check is the official KNUST portal: apps.knust.edu.gh - but I can tell you general info: Cutoffs for science programs are usually 08-15, hostels in Ayeduase cost GHS 3000-6000 per year. What specific info you want?`;
+    }
 
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply: reply.substring(0, 1000) });
+
   } catch (e) {
-    return res.status(500).json({ reply: "Boss, error - " + e.message });
+    console.log(e);
+    return res.status(200).json({ 
+      reply: `Yes! KNUST means Kwame Nkrumah University of Science and Technology. It's in Kumasi, Ghana's best university for science/tech. 
+
+For your question "${req.body?.message}", here's quick answer:
+- Full name: Kwame Nkrumah University of Science and Technology
+- Location: Kumasi, Ashanti Region
+- Best for: Engineering, Science, Medicine, Business
+- Ask me about: cut-off, hostels in Ayeduase/Kotei, fees, courses!
+
+What else you want know?` 
+    });
   }
 }
