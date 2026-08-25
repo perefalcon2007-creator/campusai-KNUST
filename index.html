@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusAI - KNUST</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{min-height:100vh;background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)),url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{color:white;text-align:center;margin:20px 0}
+.header h1{font-size:2.5rem}
+.chat-box{width:100%;max-width:700px;background:white;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,0.3);overflow:hidden;display:flex;flex-direction:column;height:480px}
+.chat-top{padding:12px 18px;background:#f8f9fa;border-bottom:1px solid #eee;font-weight:700}
+.messages{flex:1;padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.msg{padding:10px 14px;border-radius:18px;max-width:80%;font-size:14px}
+.bot{background:#f1f5f9;align-self:flex-start}
+.user{background:#2563eb;color:white;align-self:flex-end}
+.input-area{padding:14px;border-top:1px solid #eee;display:flex;gap:10px}
+.input-area input{flex:1;padding:12px 16px;border-radius:999px;border:1px solid #ddd;outline:none}
+.input-area button{padding:12px 20px;border-radius:999px;border:none;background:#2563eb;color:white;font-weight:600;cursor:pointer}
+.cards{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center;max-width:700px}
+.card{background:white;border-radius:12px;padding:14px 18px;text-align:center;min-width:130px}
+.card b{display:block;font-size:13px}
+.card span{font-size:11px;color:#666}
+.footer{margin-top:20px;color:white;opacity:0.8;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header"><h1>CampusAI 🎓</h1><p>Your KNUST AI Guide - Built in Kumasi</p></div>
+<div class="chat-box">
+<div class="chat-top">🟢 CampusAI - Live</div>
+<div class="messages" id="messages"><div class="msg bot">Hi! I'm your KNUST AI guide. Ask me about hostels, cut-off, fees, courses... 🇬🇭</div></div>
+<div class="input-area"><input id="q" placeholder="Type your question..."><button onclick="send()">Send</button></div>
+</div>
+<div class="cards">
+<div class="card"><b>📚 Admissions</b><span>Cut-off & Requirements</span></div>
+<div class="card"><b>🏠 Hostels</b><span>Ayeduase, Kotei</span></div>
+<div class="card"><b>🔥 Fees</b><span>Fees & Scholarships</span></div>
+<div class="card"><b>🎓 Courses</b><span>Registration</span></div>
+</div>
+<div class="footer">Built by you from Kumasi - KNUST ❤️ | campusai-knust.vercel.app</div>
+<script>
+function send(){
+ const input=document.getElementById('q');
+ const box=document.getElementById('messages');
+ if(!input.value.trim()) return;
+ let d=document.createElement('div');d.className='msg user';d.textContent=input.value;box.appendChild(d);
+ let t=input.value;input.value='';
+ setTimeout(()=>{let b=document.createElement('div');b.className='msg bot';b.textContent='You asked: "'+t+'" - Real AI is coming next!';box.appendChild(b);box.scrollTop=box.scrollHeight},600);
+ box.scrollTop=box.scrollHeight;
+}
+document.getElementById('q').addEventListener('keypress',e=>{if(e.key==='Enter')send()});
+</script>
+</body>
+</html>
