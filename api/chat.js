@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -7,66 +6,69 @@ export default async function handler(req, res) {
   if (req.method!== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const GROQ_KEY = process.env.GROQ_API_KEY;
-  const userMsg = (req.body.message || "").trim();
-  const lower = userMsg.toLowerCase();
+  const msg = (req.body.message || "").trim();
+  const q = msg.toLowerCase();
 
-  // --- 1. LOCAL FALLBACK (no AI needed) - stops network error for simple asks ---
-  if (lower.includes('your name') || lower.includes('who are you')) {
-    return res.status(200).json({ reply: "I'm CampusAI - your KNUST senior guide 🇬🇭 built in Kumasi! Ask me hostel, cut-off, fees, courses." });
-  }
-  if (lower.includes('hostel') || lower.includes('ayeduase') || lower.includes('kotei') || lower.includes('bomso')) {
-    return res.status(200).json({ reply:
-`Ayeduase/Kotei/Bomso Real Prices 2025/26 PER YEAR (not month):
+  // --- SPECIFIC HOSTEL DATABASE - real 2025/26 prices ---
+  const HOSTELS = {
+    shepherdsville: { name: "Shepherdsville (Ayeduase)", "4-in-1": 4000, "3-in-1": 5000, "2-in-1": 6000, "single": 9200, note: "With TV & Fridge, includes utilities", location: "Plot 4 Block T Ayeduase/Kotei Road" },
+    victory: { name: "Victory Tower / Victory Towers (Ayeduase)", "4-in-1": 9000, "3-in-1": 10000, "2-in-1": 14000, "single": 20000, "single_std": 15000, "single_exec": 19000, note: "Most expensive, luxury, CCTV, generator, Rent Control inspected 2025", },
+    kairos: { name: "Kairos Chronos", "2-in-1": 10000, "3-in-1": 8000, "1-in": 15000, "exec": 19000, note: "Premium, often quoted together with Victory" },
+    liendavel: { name: "Liendavel Hot Hostel", "3-in-1": 9500, "2-in-1": 13000, "single": 20000, note: "Rent Control 2025: 20k single, 13k double" },
+    republic: { name: "Republic Hall (Repuba) - Traditional", price: 2167.8, type: "Traditional Hall - Male hall, on campus, Govt price frozen", includes: "Light, water, wifi, bed", eligibility: "Mostly Level 100s" },
+    unity: { name: "Unity Hall (Conti) - Traditional", price: 2167.8, type: "Traditional - Largest hall, male", },
+    africa: { name: "Africa Hall - Traditional", price: 2167.8, type: "Traditional - Female hall" },
+    queendom: { name: "Queens Hall - Traditional", price: 2167.8, type: "Traditional - Female" },
+    independence: { name: "Independence Hall - Traditional", price: 2167.8, type: "Traditional - Mixed" },
+    brunei: { name: "Brunei Complex / GUSSS", "4-in-1": 5525, "3-in-1": 6610, "2-in-2": 7245, "2-in-1": 8470, note: "GUSSS official 2024/25, pay via GCB/Ecobank reservation code" },
+  };
 
-• Traditional Halls (Unity, Africa, Repu, Queens): GHS 2,167.80/year - fixed, includes light/water/wifi. For freshers only.
-
-• Budget Private: 4-in-a-room GHS 2,000-3,500 / year
-• Mid Private (most hostels): 4-in-1 GHS 4,000-5,525 | 2-in-1 GHS 5,000-8,000
-• Premium (TV, fridge, generator): Shepherdsville 4-in-1 4k, 2-in-1 6k, Single 9,200 | Victory/Kairos Single 15k-20k, Double 10k-14k each
-
-Most charge utilities separate (500-1000). Always confirm if academic year or 12 months.`
-    });
-  }
-  if (lower.includes('cut') || lower.includes('aggregate')) {
-    return res.status(200).json({ reply:
-`Latest KNUST cut-off 2025/26 (WASSCE aggregate, lower is better):
-Med/Human Bio 06, Dental 06, Pharm D 06, Nursing 07, Computer Sci 07, Biomed Eng 06, Petroleum 07-08, Architecture 08-09, Business Accounting 07-08, Law 06, Actuarial 08-10, Biological Science 09-10.
-
-Full list has 100+ courses - tell me the course name?`
-    });
-  }
-
-  // --- 2. TRY GROQ AI for other questions ---
-  if (!GROQ_KEY) {
-    return res.status(200).json({ reply: "I'm CampusAI! Your Groq key is missing in Vercel > Settings > Environment Variables > GROQ_API_KEY. Add it and redeploy. But I can still answer hostels/cut-offs locally." });
-  }
-
-  try {
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${GROQ_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile', // most stable model, won't crash
-        temperature: 0.3,
-        max_tokens: 800,
-        messages: [
-          { role: 'system', content: `You are CampusAI, KNUST guide. Real data: Traditional hall 2167.80/year, private hostels 2000-20000/year depending on standard (budget 2k-3.5k, mid 5k-8k, premium 9k-20k). Cutoffs: Medicine 06, Nursing 07, Comp Sci 07, Actuarial 10, Law 06. Fees 6345-11614 GHC. Always say PER YEAR. Be friendly Ghanaian style, short.` },
-          { role: 'user', content: userMsg }
-        ]
-      })
-    });
-
-    const data = await groqRes.json();
-    if (!groqRes.ok) {
-      console.error("Groq error:", data);
-      // Fallback reply instead of 500 error
-      return res.status(200).json({ reply: `Chale, AI busy small (${data.error?.message || 'groq error'}). But for hostel: Ayeduase is GHS 2k-9k per YEAR not month. Ask me specific course/hostel?` });
+  // Detect specific hostel
+  let specificData = null;
+  let contextPrompt = "";
+  for (const key in HOSTELS) {
+    if (q.includes(key) || (key==="queendom" && q.includes("queen")) || (key==="republic" && q.includes("repu"))) {
+      specificData = HOSTELS[key];
+      contextPrompt = `USER ASKED SPECIFICALLY ABOUT: ${specificData.name}. DATA: ${JSON.stringify(specificData)}. You MUST answer only about this hostel with its exact prices PER YEAR. Don't give generic list.`;
+      break;
     }
-
-    return res.status(200).json({ reply: data.choices[0].message.content });
-
-  } catch (err) {
-    console.error(err);
-    return res.status(200).json({ reply: "Network hiccup! But I'm still here. Hostel Ayeduase is 2000-9200 per academic year. Cut-off Medicine 06, Nursing 07, Comp Sci 07. What course you dey ask?" });
   }
+
+  // If asks "traditional only" -> give only traditional
+  if (q.includes("traditional") &&!specificData) {
+    contextPrompt = `User wants ONLY traditional halls. Answer: All traditional halls cost GHS 2,167.80 per YEAR (frozen govt price). List: Unity, Africa, Independence, Queens, Republic, University Hall (Katanga). Includes light/water/wifi. For freshers. Don't talk about private hostels unless asked.`;
+  }
+
+  // Try AI with specific context (flexible, not rigid)
+  if (GROQ_KEY) {
+    const MODELS = ['openai/gpt-oss-20b', 'llama-3.1-8b-instant', 'llama3-70b-8192'];
+    for (const model of MODELS) {
+      try {
+        const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${GROQ_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model,
+            temperature: 0.4,
+            max_tokens: 700,
+            messages: [
+              { role: 'system', content: `You are CampusAI, friendly KNUST senior in Kumasi.
+General knowledge: Traditional halls 2167.80/year. Private hostels range 2000-20000/year: budget 4-in-1 2000-3500, mid 4000-8000, premium 9200-20000 (Shepherdsville single 9200, Victory single 20000). All prices PER ACADEMIC YEAR (8-10 months), utilities often separate 500-1000. Always explain per year.
+${contextPrompt}
+Be conversational, not rigid. Use Ghanaian vibe small.` },
+              { role: 'user', content: msg }
+            ]
+          })
+        });
+        const data = await r.json();
+        if (r.ok) return res.status(200).json({ reply: data.choices[0].message.content });
+      } catch(e){ continue; }
+    }
+  }
+
+  // Fallback if no key or AI fails - still specific
+  if (specificData) {
+    return res.status(200).json({ reply: `${specificData.name} real price 2025/26 PER YEAR:\n${JSON.stringify(specificData, null, 2)}\nNote: Ask if utilities included.` });
+  }
+  return res.status(200).json({ reply: "CampusAI here! Traditional halls GHS 2,167.80/year. Private: Shepherdsville 4k-9.2k, Victory/Kairos 8k-20k per year. Tell me which hostel name exactly?" });
 }
