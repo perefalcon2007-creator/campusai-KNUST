@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   // --- MAXIMUM KNUST KNOWLEDGE BASE 2025/2026 ---
   const KNOWLEDGE = `
-KNUST OFFICIAL DATA 2026/2027 ADMISSION YEAR - VERIFIED:
+KNUST OFFICIAL DATA 2025/2026 ADMISSION YEAR - VERIFIED:
 
 1. ADMISSION REQUIREMENTS:
 - WASSCE: A1-C6 in 3 Core (English, Maths, Integrated Science) + 3 Electives relevant. Aggregate max 24, but competitive courses need 06-12.
@@ -65,7 +65,7 @@ IDL Distance: BBA 4843, Computer Science 6395, etc.
         model: 'openai/gpt-oss-20b',
         temperature: 0.25,
         messages: [
-          { role: 'system', content: `You are CampusAI, the KNUST guide built by PereFalc. 
+          { role: 'system', content: `You are CampusAI, the KNUST guide built in Kumasi. You are friendly, not rigid, you explain like a senior helping a fresher.
 You have this full verified dataset:
 ${KNOWLEDGE}
 
