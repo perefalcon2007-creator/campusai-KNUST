@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${key}`
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'openai/gpt-oss-20b',
         messages: [
           { role: 'system', content: 'You are CampusAI, expert KNUST guide from Kumasi Ghana. You know all about KNUST hostels, fees, cut-off points, admissions, WASSCE, courses, pre-med program, accommodation, campus life. Answer friendly, brief, with Ghanaian vibe.' },
           { role: 'user', content: message }
