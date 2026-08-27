@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusAI Admin FINAL - REAL GA</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B21HQKEC47"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B21HQKEC47');
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:Inter,sans-serif;background:#0f172a;color:white}
+.card{background:#1e293b;border-radius:16px;padding:20px;border:1px solid #334155}
+.btn{background:#3b82f6;padding:12px;border-radius:10px;font-weight:bold;width:100%}
+input,textarea,select{background:#0f172a;border:1px solid #334155;padding:10px;border-radius:8px;width:100%;color:white;margin-bottom:8px}
+</style>
+</head>
+<body class="p-6">
+<h1 class="text-3xl font-bold">CampusAI FINAL ADMIN 🔥</h1>
+<p class="text-slate-400 mb-6">GA ID: G-B21HQKEC47 LIVE | File: admin-final.html</p>
+
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div class="card"><p>Resources</p><h2 id="totalRes" class="text-2xl font-bold">0</h2></div>
+<div class="card"><p>Real Views</p><h2 class="text-lg font-bold text-green-400">Check analytics.google.com</h2></div>
+<div class="card"><p>Status</p><h2 class="text-green-400 font-bold">LIVE ✅</h2></div>
+</div>
+
+<div class="card">
+<h3 class="font-bold mb-3">Add Resource - Auto Push to Vercel</h3>
+<input id="resTitle" placeholder="Title e.g. 2024 Past Questions">
+<input id="resLink" placeholder="Google Drive Link">
+<select id="resCat"><option>Past Questions</option><option>Notes</option><option>Hostels</option><option>GPA Tool</option></select>
+<textarea id="resDesc" placeholder="Description"></textarea>
+<button onclick="saveResource()" class="btn">SAVE & PUSH LIVE</button>
+<p id="statusMsg" class="mt-3 text-sm"></p>
+</div>
+
+<script>
+// PASTE YOUR NEW GITHUB TOKEN HERE - DELETE OLD ghp_Jrmy... FIRST!
+const GITHUB_TOKEN = "PASTE_NEW_TOKEN_HERE";
+const GITHUB_REPO = "trey-cyber/campusai-KNUST";
+const RESOURCES_FILE = "resources.json";
+let resources=[];
+
+async function loadResources(){
+ const r=await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/${RESOURCES_FILE}?t=${Date.now()}`);
+ if(r.ok){resources=await r.json();document.getElementById('totalRes').innerText=resources.length;}
+}
+loadResources();
+
+async function saveResource(){
+ const title=document.getElementById('resTitle').value.trim();
+ const link=document.getElementById('resLink').value.trim();
+ const cat=document.getElementById('resCat').value;
+ const desc=document.getElementById('resDesc').value.trim();
+ const status=document.getElementById('statusMsg');
+ if(GITHUB_TOKEN.includes("PASTE")){status.innerText="❌ Paste NEW token at top first!";return;}
+ if(!title||!link){status.innerText="❌ Title + Link needed";return;}
+ status.innerText="⏳ Pushing to GitHub...";
+ resources.unshift({id:Date.now(),title,link,category:cat,description:desc,date:new Date().toISOString()});
+ const getRes=await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${RESOURCES_FILE}`,{headers:{Authorization:`token ${GITHUB_TOKEN}`}});
+ let sha=null;if(getRes.ok){const d=await getRes.json();sha=d.sha;}
+ const content=btoa(unescape(encodeURIComponent(JSON.stringify(resources,null,2))));
+ const putRes=await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${RESOURCES_FILE}`,{method:'PUT',headers:{Authorization:`token ${GITHUB_TOKEN}`,'Content-Type':'application/json'},body:JSON.stringify({message:`Add ${title}`,content,sha})});
+ if(putRes.ok){status.innerText="✅ SAVED! Vercel redeploys in 1 min";document.getElementById('totalRes').innerText=resources.length;}
+ else{const e=await putRes.json();status.innerText="❌ "+e.message;}
+}
+</script>
+</body>
+</html>
