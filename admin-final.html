@@ -7,7 +7,7 @@
 </head>
 <body class="bg-black text-white min-h-screen p-6">
 <div class="max-w-2xl mx-auto">
-<h1 class="text-2xl font-bold mb-4">Admin SAFE ✅ FINAL</h1>
+<h1 class="text-2xl font-bold mb-4">Admin SAFE ✅ ULTRA SIMPLE</h1>
 <div class="bg-zinc-900 p-4 rounded-xl space-y-3">
 <input id="title" placeholder="Title" class="w-full p-2 rounded bg-zinc-800">
 <input id="category" placeholder="Category" class="w-full p-2 rounded bg-zinc-800">
@@ -18,46 +18,24 @@
 </div>
 </div>
 <script>
-function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
 async function save(){
  const btn=document.getElementById('btn'),msg=document.getElementById('msg');
- btn.textContent='SAVING...'; btn.disabled=true; msg.textContent='Getting file...';
+ btn.textContent='SAVING...'; btn.disabled=true; msg.textContent='Pushing via Vercel server...';
  try{
-  // 1. Get SHA from GitHub API
-  const shaRes = await fetch('https://api.github.com/repos/trey-cyber/campusai-KNUST/contents/resources.json?t='+Date.now());
-  const shaData = await shaRes.json();
-  if(!shaData.sha) throw new Error('GitHub API blocked. Wait 1 min and retry. '+ (shaData.message||''));
-  const sha = shaData.sha;
-  
-  // 2. Get current resources from YOUR live site (no block)
-  const contentRes = await fetch('/resources.json?t='+Date.now());
-  let resources = await contentRes.json();
-  if(!Array.isArray(resources)) resources = resources.resources || [];
-
-  // 3. Add new
-  const newItem = {
-    id: Date.now(),
-    title: document.getElementById('title').value.trim(),
-    category: document.getElementById('category').value.trim(),
-    description: document.getElementById('desc').value.trim(),
-    file: document.getElementById('file').value.trim(),
-    date: new Date().toISOString()
-  };
-  if(!newItem.title) throw new Error('Title required');
-  resources.unshift(newItem);
-  
-  msg.textContent='Pushing to GitHub via SAFE API...';
-  const newContent = b64EncodeUnicode(JSON.stringify(resources, null, 2));
-  
-  const saveRes = await fetch('/api/save', {
+  const res = await fetch('/api/save', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ content: newContent, message: `Add: ${newItem.title}`, sha })
+    body: JSON.stringify({
+      title: document.getElementById('title').value.trim(),
+      category: document.getElementById('category').value.trim(),
+      description: document.getElementById('desc').value.trim(),
+      file: document.getElementById('file').value.trim()
+    })
   });
-  const result = await saveRes.json();
-  if(saveRes.ok){ msg.textContent='✅ SAVED! Vercel redeploys in 1-2 mins!'; msg.className='text-green-400 text-sm'; }
-  else{ msg.textContent='❌ Error: '+(result.message||JSON.stringify(result)); msg.className='text-red-400 text-sm'; }
- }catch(e){ msg.textContent='❌ '+e.message; msg.className='text-red-400 text-sm'; }
+  const data = await res.json();
+  if(res.ok){ msg.textContent='✅ SAVED! Check site in 2 mins! File created if not existed!'; msg.className='text-green-400'; }
+  else{ msg.textContent='❌ '+ (data.message||data.error||JSON.stringify(data)); msg.className='text-red-400'; }
+ }catch(e){ msg.textContent='❌ '+e.message; }
  btn.textContent='SAVE & PUSH LIVE (SAFE)'; btn.disabled=false;
 }
 </script>
