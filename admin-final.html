@@ -7,36 +7,34 @@
 </head>
 <body class="bg-black text-white min-h-screen p-6">
 <div class="max-w-2xl mx-auto">
-<h1 class="text-2xl font-bold mb-4">Admin SAFE ✅ Fixed</h1>
+<h1 class="text-2xl font-bold mb-4">Admin SAFE ✅ FINAL</h1>
 <div class="bg-zinc-900 p-4 rounded-xl space-y-3">
 <input id="title" placeholder="Title" class="w-full p-2 rounded bg-zinc-800">
-<input id="category" placeholder="Category (WASSCE, Notes...)" class="w-full p-2 rounded bg-zinc-800">
+<input id="category" placeholder="Category" class="w-full p-2 rounded bg-zinc-800">
 <input id="desc" placeholder="Description" class="w-full p-2 rounded bg-zinc-800">
-<input id="file" placeholder="File Link (drive...)" class="w-full p-2 rounded bg-zinc-800">
+<input id="file" placeholder="File Link" class="w-full p-2 rounded bg-zinc-800">
 <button onclick="save()" id="btn" class="w-full bg-green-600 py-3 rounded font-bold">SAVE & PUSH LIVE (SAFE)</button>
 <p id="msg" class="text-sm text-zinc-400"></p>
 </div>
 </div>
 <script>
-function b64DecodeUnicode(str){
-  str=str.replace(/\n/g,'').replace(/\s/g,'');
-  try{ return decodeURIComponent(escape(atob(str))); }catch(e){ return atob(str); }
-}
-function b64EncodeUnicode(str){
-  return btoa(unescape(encodeURIComponent(str)));
-}
+function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
 async function save(){
  const btn=document.getElementById('btn'),msg=document.getElementById('msg');
- btn.textContent='SAVING...'; btn.disabled=true; msg.textContent='';
+ btn.textContent='SAVING...'; btn.disabled=true; msg.textContent='Getting file...';
  try{
-  const getRes = await fetch('https://api.github.com/repos/trey-cyber/campusai-KNUST/contents/resources.json?t='+Date.now());
-  const getData = await getRes.json();
-  const sha = getData.sha;
-  let contentStr = b64DecodeUnicode(getData.content);
-  let resources = [];
-  try{ resources = JSON.parse(contentStr); }catch(e){ resources=[]; }
-  if(!Array.isArray(resources)) resources = resources.resources || [];
+  // 1. Get SHA from GitHub API
+  const shaRes = await fetch('https://api.github.com/repos/trey-cyber/campusai-KNUST/contents/resources.json?t='+Date.now());
+  const shaData = await shaRes.json();
+  if(!shaData.sha) throw new Error('GitHub API blocked. Wait 1 min and retry. '+ (shaData.message||''));
+  const sha = shaData.sha;
   
+  // 2. Get current resources from YOUR live site (no block)
+  const contentRes = await fetch('/resources.json?t='+Date.now());
+  let resources = await contentRes.json();
+  if(!Array.isArray(resources)) resources = resources.resources || [];
+
+  // 3. Add new
   const newItem = {
     id: Date.now(),
     title: document.getElementById('title').value.trim(),
@@ -45,8 +43,10 @@ async function save(){
     file: document.getElementById('file').value.trim(),
     date: new Date().toISOString()
   };
-  if(!newItem.title){ throw new Error('Title required'); }
+  if(!newItem.title) throw new Error('Title required');
   resources.unshift(newItem);
+  
+  msg.textContent='Pushing to GitHub via SAFE API...';
   const newContent = b64EncodeUnicode(JSON.stringify(resources, null, 2));
   
   const saveRes = await fetch('/api/save', {
@@ -55,7 +55,7 @@ async function save(){
     body: JSON.stringify({ content: newContent, message: `Add: ${newItem.title}`, sha })
   });
   const result = await saveRes.json();
-  if(saveRes.ok){ msg.textContent='✅ SAVED! Vercel redeploys in 1-2 mins! Check your site!'; msg.className='text-green-400 text-sm'; }
+  if(saveRes.ok){ msg.textContent='✅ SAVED! Vercel redeploys in 1-2 mins!'; msg.className='text-green-400 text-sm'; }
   else{ msg.textContent='❌ Error: '+(result.message||JSON.stringify(result)); msg.className='text-red-400 text-sm'; }
  }catch(e){ msg.textContent='❌ '+e.message; msg.className='text-red-400 text-sm'; }
  btn.textContent='SAVE & PUSH LIVE (SAFE)'; btn.disabled=false;
