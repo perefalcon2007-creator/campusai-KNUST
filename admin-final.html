@@ -7,7 +7,7 @@
 </head>
 <body class="bg-black text-white min-h-screen p-6">
 <div class="max-w-2xl mx-auto">
-<h1 class="text-2xl font-bold mb-4">Admin SAFE ✅ Token Hidden in Vercel</h1>
+<h1 class="text-2xl font-bold mb-4">Admin SAFE ✅ Fixed</h1>
 <div class="bg-zinc-900 p-4 rounded-xl space-y-3">
 <input id="title" placeholder="Title" class="w-full p-2 rounded bg-zinc-800">
 <input id="category" placeholder="Category (WASSCE, Notes...)" class="w-full p-2 rounded bg-zinc-800">
@@ -18,39 +18,46 @@
 </div>
 </div>
 <script>
+function b64DecodeUnicode(str){
+  str=str.replace(/\n/g,'').replace(/\s/g,'');
+  try{ return decodeURIComponent(escape(atob(str))); }catch(e){ return atob(str); }
+}
+function b64EncodeUnicode(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
 async function save(){
  const btn=document.getElementById('btn'),msg=document.getElementById('msg');
- btn.textContent='SAVING...'; btn.disabled=true;
+ btn.textContent='SAVING...'; btn.disabled=true; msg.textContent='';
  try{
-  // 1. Get current resources.json to get sha
-  const getRes = await fetch('https://api.github.com/repos/trey-cyber/campusai-KNUST/contents/resources.json');
+  const getRes = await fetch('https://api.github.com/repos/trey-cyber/campusai-KNUST/contents/resources.json?t='+Date.now());
   const getData = await getRes.json();
   const sha = getData.sha;
-  const contentStr = atob(getData.content);
-  const resources = JSON.parse(contentStr);
+  let contentStr = b64DecodeUnicode(getData.content);
+  let resources = [];
+  try{ resources = JSON.parse(contentStr); }catch(e){ resources=[]; }
+  if(!Array.isArray(resources)) resources = resources.resources || [];
   
-  // 2. Add new item
   const newItem = {
     id: Date.now(),
-    title: document.getElementById('title').value,
-    category: document.getElementById('category').value,
-    description: document.getElementById('desc').value,
-    file: document.getElementById('file').value,
+    title: document.getElementById('title').value.trim(),
+    category: document.getElementById('category').value.trim(),
+    description: document.getElementById('desc').value.trim(),
+    file: document.getElementById('file').value.trim(),
     date: new Date().toISOString()
   };
+  if(!newItem.title){ throw new Error('Title required'); }
   resources.unshift(newItem);
-  const newContent = btoa(JSON.stringify(resources, null, 2));
+  const newContent = b64EncodeUnicode(JSON.stringify(resources, null, 2));
   
-  // 3. Call our SAFE API (token hidden in Vercel)
   const saveRes = await fetch('/api/save', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ content: newContent, message: `Add: ${newItem.title}`, sha })
   });
   const result = await saveRes.json();
-  if(saveRes.ok){ msg.textContent='✅ SAVED! Vercel redeploys in 1-2 mins!'; msg.className='text-green-400'; }
-  else{ msg.textContent='❌ Error: '+JSON.stringify(result); msg.className='text-red-400'; }
- }catch(e){ msg.textContent='❌ '+e.message; }
+  if(saveRes.ok){ msg.textContent='✅ SAVED! Vercel redeploys in 1-2 mins! Check your site!'; msg.className='text-green-400 text-sm'; }
+  else{ msg.textContent='❌ Error: '+(result.message||JSON.stringify(result)); msg.className='text-red-400 text-sm'; }
+ }catch(e){ msg.textContent='❌ '+e.message; msg.className='text-red-400 text-sm'; }
  btn.textContent='SAVE & PUSH LIVE (SAFE)'; btn.disabled=false;
 }
 </script>
