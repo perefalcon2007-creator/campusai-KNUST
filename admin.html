@@ -1,136 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>CampusAI Admin | KNUST</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{display:flex;background:#0a0a0b;color:#fff;min-height:100vh}
-.sidebar{width:260px;background:#111113;border-right:1px solid #222;padding:24px;position:fixed;height:100vh;overflow-y:auto}
-.logo{font-weight:800;font-size:20px;margin-bottom:30px}.logo span{color:#FFD700}
-.menu a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;color:#888;text-decoration:none;margin:6px 0;cursor:pointer;transition:.2s}
-.menu a.active,.menu a:hover{background:#1a1a1e;color:#fff}
-.main{margin-left:260px;flex:1;padding:30px;background:#0a0a0b}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
-.card{background:#141417;border:1px solid #232326;border-radius:16px;padding:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:30px}
-.stat h3{color:#888;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.stat b{font-size:28px}
-input,textarea,select{width:100%;background:#1a1a1e;border:1px solid #2a2a2e;color:#fff;padding:12px 14px;border-radius:10px;margin:8px 0;outline:none}
-input:focus,textarea:focus{border-color:#FFD700}
-.btn{background:#FFD700;color:#000;padding:12px 20px;border-radius:10px;border:0;font-weight:700;cursor:pointer;width:100%}
-.btn-ghost{background:#222;color:#fff}
-.table{width:100%;border-collapse:collapse}.table th{color:#666;font-size:12px;text-align:left;padding:12px}.table td{padding:14px 12px;border-top:1px solid #222;font-size:14px}
-.badge{background:#FFD70022;color:#FFD700;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.section{display:none}.section.active{display:block}
-#loginPage{position:fixed;inset:0;background:#0a0a0b;display:flex;align-items:center;justify-content:center;z-index:100}
-.loginBox{background:#141417;border:1px solid #232326;padding:40px;border-radius:20px;width:360px;text-align:center}
-</style>
-</head>
-<body>
-
-<div id="loginPage">
-<div class="loginBox">
-<h1 style="font-weight:800;margin-bottom:8px">CampusAI<span style="color:#FFD700"> ADMIN</span></h1>
-<p style="color:#888;margin-bottom:20px;font-size:14px">KNUST Control Center</p>
-<input type="password" id="pw" placeholder="Password">
-<button class="btn" style="margin-top:12px" onclick="login()">Access Dashboard →</button>
-<p id="err" style="color:#ff4444;font-size:12px;margin-top:10px"></p>
-<p style="color:#444;font-size:11px;margin-top:20px">Default: knust2026</p>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex,nofollow"><title>CampusAI Admin - KNUST</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}body{display:flex;background:#0a0a0b;color:#fff;min-height:100vh}.sidebar{width:260px;background:#111113;border-right:1px solid #222;padding:24px;position:fixed;height:100vh;overflow-y:auto}.logo{font-weight:800;font-size:20px;margin-bottom:30px}.logo span{color:#FFD700}.menu a{display:flex;gap:12px;padding:12px 14px;border-radius:10px;color:#888;text-decoration:none;margin:6px 0;cursor:pointer}.menu a.active,.menu a:hover{background:#1a1a1e;color:#fff}.main{margin-left:260px;flex:1;padding:30px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.card{background:#141417;border:1px solid #232326;border-radius:16px;padding:20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:30px}.stat h3{color:#888;font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}.stat b{font-size:28px}input,textarea,select{width:100%;background:#1a1a1e;border:1px solid #2a2a2e;color:#fff;padding:12px 14px;border-radius:10px;margin:8px 0;outline:none}input:focus{border-color:#FFD700}.btn{background:#FFD700;color:#000;padding:12px 20px;border-radius:10px;border:0;font-weight:700;cursor:pointer;width:100%}.btn-ghost{background:#222;color:#fff}.section{display:none}.section.active{display:block}#loginPage{position:fixed;inset:0;background:#0a0a0b;display:flex;align-items:center;justify-content:center;z-index:100}.loginBox{background:#141417;border:1px solid #232326;padding:40px;border-radius:20px;width:360px;text-align:center}#jsonBox{background:#000;border:1px dashed #FFD700;padding:15px;border-radius:10px;margin-top:15px;display:none}</style></head><body>
+<div id="loginPage"><div class="loginBox"><h1 style="font-weight:800">CampusAI<span style="color:#FFD700"> ADMIN</span></h1><p style="color:#888;margin:10px 0;font-size:13px">KNUST Global Control</p><input type="password" id="pw" placeholder="Password"><button class="btn" style="margin-top:12px" onclick="login()">Access →</button><p id="err" style="color:#ff4444;font-size:12px;margin-top:10px"></p></div></div>
+<div class="sidebar"><div class="logo">CampusAI <span>KNUST</span></div><div class="menu"><a class="active" onclick="show('dash',this)">📊 Dashboard</a><a onclick="show('posts',this)">📢 Global Announcements</a><a onclick="show('set',this)">⚙️ Settings</a></div><div style="margin-top:40px;padding:14px;background:#1a1a1e;border-radius:12px"><p style="font-size:11px;color:#888">Live Site</p><b style="font-size:12px">campusai-knust.vercel.app</b><br><a href="/" target="_blank" style="color:#FFD700;font-size:11px">View Site →</a></div></div>
+<div class="main"><div class="top"><h1 id="title">Dashboard</h1><div style="display:flex;gap:10px;align-items:center"><span style="color:#888;font-size:12px">Terry • Admin</span><div style="width:32px;height:32px;background:#FFD700;border-radius:50%;display:grid;place-items:center;color:#000;font-weight:800">T</div></div></div>
+<div id="dash" class="section active"><div class="grid"><div class="card stat"><h3>TOTAL VISITS (FAKE - NEED ANALYTICS)</h3><b id="v">0</b><p style="color:#888;font-size:11px;margin-top:6px">Add Analytics to make real</p></div><div class="card stat"><h3>GLOBAL POSTS</h3><b id="pc">0</b><p style="color:#888;font-size:11px">Live for all students</p></div><div class="card stat"><h3>GOOGLE STATUS</h3><b style="color:#22c55e">Indexed ✅</b><p style="color:#888;font-size:11px">Sitemap Success</p></div><div class="card stat"><h3>MODE</h3><b style="color:#FFD700">GLOBAL 🌍</b><p style="color:#888;font-size:11px">All students see posts</p></div></div><div class="card"><h3>📢 Live Global Posts (What all students see)</h3><div id="liveList" style="margin-top:15px"></div></div></div>
+<div id="posts" class="section"><div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><h3>Create Global Announcement</h3><select id="ptype"><option>📢 General</option><option>🚨 Urgent</option><option>🎉 Event</option><option>📚 Academics</option><option>🏠 Hostel</option></select><input id="ptitle" placeholder="Title: e.g., Mid-Sem Starts Nov 10"><textarea id="pmsg" rows="5" placeholder="Full details..."></textarea><input id="plink" placeholder="Optional Link"><button class="btn" onclick="gen()">Generate Global Code →</button><div id="jsonBox"><h4 style="color:#FFD700;margin-bottom:8px">STEP 2: COPY THIS JSON</h4><p style="font-size:11px;color:#888;margin-bottom:8px">GitHub > announcements.json > Edit (pencil) > Select All > Paste > Commit</p><textarea id="jout" rows="8" style="font-family:monospace;font-size:11px;background:#000"></textarea><button class="btn" style="background:#22c55e;margin-top:10px" onclick="copyJ()">Copy & Go to announcements.json</button></div></div><div class="card"><h3>How Global Works</h3><p style="color:#888;font-size:13px;line-height:1.6;margin-top:10px">1. You type post here<br>2. Click Generate<br>3. Copy JSON<br>4. Paste to announcements.json file on GitHub<br>5. Vercel deploys in 60 sec<br>6. ALL students see GOLD bar on homepage!<br><br><span style="color:#FFD700">This is how free universities start without paying for backend.</span></p></div></div></div>
+<div id="set" class="section"><div class="card"><h3>Analytics Setup (Make visits REAL)</h3><p style="color:#888;font-size:13px;margin:10px 0">Go to analytics.google.com > Create Property > Copy ID (G-XXXX) > Paste in index.html. I will do it for you if you give me ID.</p><input id="npw" placeholder="New Password"><button class="btn btn-ghost" onclick="if(npw.value.length>3){localStorage.setItem('admin_pw',npw.value);alert('Changed to '+npw.value)}">Change Password</button></div></div>
 </div>
-</div>
-
-<div class="sidebar">
-<div class="logo">CampusAI <span>KNUST</span></div>
-<div class="menu">
-<a class="active" onclick="show('dash',this)">📊 Dashboard</a>
-<a onclick="show('posts',this)">📢 Announcements</a>
-<a onclick="show('events',this)">📅 Events & Exams</a>
-<a onclick="show('acad',this)">📚 Academic Hub</a>
-<a onclick="show('faq',this)">💬 AI Knowledge Base</a>
-<a onclick="show('users',this)">👥 Student Queries</a>
-<a onclick="show('settings',this)">⚙️ Site Settings</a>
-</div>
-<div style="margin-top:40px;padding:14px;background:#1a1a1e;border-radius:12px">
-<p style="font-size:12px;color:#888">Live Site</p><b style="font-size:13px">campusai-knust.vercel.app</b><br>
-<a href="/" target="_blank" style="color:#FFD700;font-size:12px">View Site →</a>
-</div>
-</div>
-
-<div class="main">
-<div class="top"><h1 id="title">Dashboard</h1><div style="display:flex;gap:10px;align-items:center"><span style="color:#888;font-size:13px">Terry • Admin</span><div style="width:32px;height:32px;background:#FFD700;border-radius:50%;display:grid;place-items:center;color:#000;font-weight:800">T</div></div></div>
-
-<!-- DASHBOARD -->
-<div id="dash" class="section active">
-<div class="grid">
-<div class="card stat"><h3>Total Visits</h3><b id="s_visits">1,247</b><p style="color:#22c55e;font-size:12px;margin-top:6px">↑ 12% this week</p></div>
-<div class="card stat"><h3>AI Chats Today</h3><b id="s_chats">89</b><p style="color:#888;font-size:12px;margin-top:6px">Avg 2.4 min</p></div>
-<div class="card stat"><h3>Active Posts</h3><b id="s_posts">0</b><p style="color:#888;font-size:12px;margin-top:6px">Announcements</p></div>
-<div class="card stat"><h3>Google Status</h3><b style="color:#22c55e">Indexed ✅</b><p style="color:#888;font-size:12px;margin-top:6px">Sitemap Success</p></div>
-</div>
-<div class="grid" style="grid-template-columns:2fr 1fr">
-<div class="card"><h3 style="margin-bottom:16px">Recent Student Questions (AI couldn't answer)</h3><table class="table"><tr><th>Question</th><th>Time</th><th>Action</th></tr><tr><td>Where to pay hostel fees?</td><td>2h ago</td><td><span class="badge">ADD TO KB</span></td></tr><tr><td>Mid-sem timetable for CoE?</td><td>5h ago</td><td><span class="badge">ADD TO KB</span></td></tr></table></div>
-<div class="card"><h3 style="margin-bottom:12px">Quick Actions</h3><button class="btn" onclick="show('posts',document.querySelectorAll('.menu a')[1])" style="margin-bottom:10px">+ New Announcement</button><button class="btn btn-ghost" onclick="show('events',document.querySelectorAll('.menu a')[2])">+ Add Exam Date</button><p style="color:#555;font-size:11px;margin-top:16px">Tip: Announcements appear instantly on homepage for all students.</p></div>
-</div>
-</div>
-
-<!-- POSTS -->
-<div id="posts" class="section">
-<div class="grid" style="grid-template-columns:1fr 1fr">
-<div class="card"><h3>Create Announcement</h3>
-<select id="p_type"><option>📢 General</option><option>🚨 Urgent - Exams</option><option>🎉 Event</option><option>🏫 Academics</option><option>🏠 Hostel</option></select>
-<input id="p_title" placeholder="Title: e.g., Mid-Sem Starts Nov 10">
-<textarea id="p_msg" rows="5" placeholder="Full details..."></textarea>
-<input id="p_link" placeholder="Optional Link (e.g., portal link)">
-<button class="btn" onclick="addPost()">Publish to Homepage →</button>
-</div>
-<div class="card"><h3>Live on Homepage</h3><div id="postList" style="margin-top:12px"></div></div>
-</div>
-</div>
-
-<!-- EVENTS -->
-<div id="events" class="section">
-<div class="card"><h3>📅 Academic Calendar / Events</h3>
-<div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:16px">
-<input id="e_name" placeholder="Event Name"><input id="e_date" type="date"><button class="btn" onclick="addEvent()">Add Event</button>
-</div>
-<div id="eventList" style="margin-top:20px"></div>
-</div>
-</div>
-
-<!-- ACADEMIC -->
-<div id="acad" class="section"><div class="card"><h3>📚 Academic Resources (Quick Links)</h3><p style="color:#888;font-size:13px;margin:8px 0">Add links students ask for most</p><input id="a_title" placeholder="Title e.g., CoE Time Table PDF"><input id="a_url" placeholder="https://..."><button class="btn" onclick="addAcad()">Add Resource</button><div id="acadList" style="margin-top:16px"></div></div></div>
-
-<!-- FAQ -->
-<div id="faq" class="section"><div class="card"><h3>💬 Train Your AI (Knowledge Base)</h3><p style="color:#888;font-size:13px;margin:8px 0">When students ask and AI fails, add answer here. AI will learn.</p><input id="f_q" placeholder="Student Question: How to check fees?"><textarea id="f_a" rows="3" placeholder="Your Answer..."></textarea><button class="btn" onclick="addFaq()">Add to AI Brain</button><div id="faqList" style="margin-top:16px"></div></div></div>
-
-<!-- USERS -->
-<div id="users" class="section"><div class="card"><h3>👥 Student Feedback / Queries</h3><table class="table" id="qTable"><tr><th>Message</th><th>Date</th></tr></table></div></div>
-
-<!-- SETTINGS -->
-<div id="settings" class="section"><div class="card"><h3>⚙️ Settings</h3><input id="newPw" placeholder="New Admin Password"><button class="btn btn-ghost" onclick="changePw()">Change Password</button><button class="btn btn-ghost" style="background:#ff444433;color:#ff4444;margin-top:20px" onclick="if(confirm('Clear ALL data?')){localStorage.clear();location.reload()}">⚠️ Reset All Data</button><p style="color:#555;font-size:11px;margin-top:20px">Admin page is hidden from Google (noindex). Only you know URL: /admin.html</p></div></div>
-
-</div>
-
 <script>
-const DEFAULT_PW='knust2026';
-function getPw(){return localStorage.getItem('admin_pw')||DEFAULT_PW}
-function login(){if(pw.value===getPw()){loginPage.style.display='none';loadAll()}else err.innerText='Wrong password!'}
-function show(id,el){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.menu a').forEach(a=>a.classList.remove('active'));el.classList.add('active');document.getElementById('title').innerText=el.innerText}
-function save(k,v){localStorage.setItem(k,JSON.stringify(v))} function load(k){return JSON.parse(localStorage.getItem(k)||'[]')}
-function addPost(){if(!p_title.value)return;let p={t:p_title.value,m:p_msg.value,type:p_type.value,link:p_link.value,d:new Date().toLocaleString(),id:Date.now()};let arr=load('posts');arr.unshift(p);save('posts',arr);p_title.value=p_msg.value=p_link.value='';renderPosts()}
-function renderPosts(){let arr=load('posts');document.getElementById('s_posts').innerText=arr.length;postList.innerHTML=arr.map(x=>`<div style="padding:12px;border:1px solid #222;border-radius:10px;margin-bottom:10px"><b>${x.type} ${x.t}</b><br><span style="color:#888;font-size:13px">${x.m}</span><br><small style="color:#555">${x.d}</small><br><a onclick="del('posts',${x.id})" style="color:#ff4444;font-size:12px;cursor:pointer">Delete</a></div>`).join('')||'No posts';}
-function addEvent(){if(!e_name.value)return;let arr=load('events');arr.push({n:e_name.value,d:e_date.value,id:Date.now()});save('events',arr);e_name.value='';renderEvents()}
-function renderEvents(){let arr=load('events');eventList.innerHTML=arr.map(x=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #222"><span>${x.n} - ${x.d}</span><span style="color:#ff4444;cursor:pointer" onclick="del('events',${x.id})">x</span></div>`).join('')}
-function addAcad(){let arr=load('acad');arr.push({t:a_title.value,u:a_url.value,id:Date.now()});save('acad',arr);renderAcad()}
-function renderAcad(){let arr=load('acad');acadList.innerHTML=arr.map(x=>`<div style="padding:8px;border-bottom:1px solid #222"><a href="${x.u}" target="_blank" style="color:#FFD700">${x.t}</a> <span style="color:#ff4444;cursor:pointer" onclick="del('acad',${x.id})"> delete</span></div>`).join('')}
-function addFaq(){let arr=load('faq');arr.push({q:f_q.value,a:f_a.value,id:Date.now()});save('faq',arr);f_q.value=f_a.value='';renderFaq()}
-function renderFaq(){let arr=load('faq');faqList.innerHTML=arr.map(x=>`<div style="padding:10px;border:1px solid #222;border-radius:10px;margin-bottom:8px"><b>Q: ${x.q}</b><br><span style="color:#888">A: ${x.a}</span> <span style="color:#ff4444;cursor:pointer" onclick="del('faq',${x.id})"> delete</span></div>`).join('')}
-function del(k,id){let arr=load(k).filter(x=>x.id!==id);save(k,arr);loadAll()}
-function changePw(){if(newPw.value.length<4)return alert('Too short');localStorage.setItem('admin_pw',newPw.value);alert('Password changed to: '+newPw.value)}
-function loadAll(){renderPosts();renderEvents();renderAcad();renderFaq();document.getElementById('s_visits').innerText=Math.floor(1200+Math.random()*100);document.getElementById('s_chats').innerText=Math.floor(80+Math.random()*20)}
-</script>
-</body>
-</html>
+let PW=localStorage.getItem('admin_pw')||'knust2026';let all=[];
+function login(){if(pw.value===PW){loginPage.style.display='none';load()}else err.innerText='Wrong! Default knust2026'}
+function show(id,el){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.menu a').forEach(a=>a.classList.remove('active'));el.classList.add('active');title.innerText=el.innerText}
+async function load(){try{let r=await fetch('/announcements.json?t='+Date.now());all=await r.json();pc.innerText=all.length;v.innerText='1,2k+';liveList.innerHTML=all.map(p=>`<div style="padding:12px;border:1px solid #222;border-radius:10px;margin-bottom:10px"><b>${p.type} ${p.t}</b><br><span style="color:#888;font-size:13px">${p.m}</span><br><small style="color:#555">${p.d}</small></div>`).join('')||'No posts yet - create one!'}catch(e){liveList.innerHTML='First create announcements.json file with []'}}
+function gen(){if(!ptitle.value||!pmsg.value)return alert('Fill title & message');let n={t:ptitle.value,m:pmsg.value,type:ptype.value,link:plink.value||'',d:new Date().toLocaleDateString()};let arr=[n,...all];jout.value=JSON.stringify(arr,null,2);jsonBox.style.display='block'}
+function copyJ(){jout.select();document.execCommand('copy');alert('Copied! Now open announcements.json file on GitHub and paste!')}
+</script></body></html>
