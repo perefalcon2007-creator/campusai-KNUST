@@ -1,23 +1,14 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>CampusAI KNUST - Hostel Prices, Fees & Courses | Built by PereFalc 2026/27</title>
-<meta name="description" content=" Student guide for KNUST freshers. Check real hostel prices in Ayeduase/Kotei, traditional hall fees 2167.80, admissions. Built by PereFalc from Kumasi.">
+<meta name="description" content="Student guide for KNUST freshers. Check real hostel prices in Ayeduase/Kotei, traditional hall fees 2167.80, admissions. Built by PereFalc from Kumasi.">
 <meta name="google-site-verification" content="LndZFcSwkIrQq2BOFwRQS9KB1j6L2ooKMxwjQAQ9zuo" />
 <link rel="stylesheet" href="./cwa.css">
  <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{
-  margin:0;
-  font-family:system-ui;
-  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./knust-gate.jpg');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height:100vh;
-}
+body{margin:0;font-family:system-ui;background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./knust-gate.jpg');background-size: cover;background-position: center top;background-repeat: no-repeat;background-attachment: fixed;min-height:100vh;}
 .header{color:white;text-align:center;margin:20px 0}
 .main-wrap{width:95%;max-width:1100px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
 .chat-box{flex:2;background:white;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column;height:500px}
@@ -35,23 +26,19 @@ body{
 .last-msg{font-size:13px;color:#334155;line-height:1.5;background:#f8fafc;padding:12px;border-radius:10px;border:1px solid #e2e8f0}
 .cards{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;justify-content:center}
 .card{background:white;border-radius:10px;padding:12px 16px;text-align:center;min-width:130px;cursor:pointer}
-.footer{margin-top:18px;color:white;opacity:.9;font-size:11px;text-align:center}
 @media(max-width:850px){.main-wrap{flex-direction:column}.chat-box{width:100%;height:65vh}.right-panel{width:100%;position:static}}
 </style>
 </head>
 <body>
 <div class="header"><h1>CampusAI 🎓</h1><p>Built by PereFalc - CampusAI KNUST 2026/2027</p>
-<!-- GLOBAL ANNOUNCEMENT WILL SHOW HERE FOR ALL STUDENTS -->
 <div id="globalTop" style="max-width:1100px;margin:12px auto 0;padding:0 10px"></div>
 </div>
-
 <div class="main-wrap">
   <div class="chat-box">
     <div class="chat-top"><span>🟢 CampusAI - Live</span><span style="font-size:11px;color:#22c55e">● Global Mode</span></div>
     <div class="messages" id="messages"><div class="msg bot">Hi! I'm your KNUST guide. Ask me about hostels, cut-off, fees, courses... 🇬🇭</div></div>
     <div class="input-area"><input id="q" placeholder="Type: what is hostel price in Ayeduase?"><button id="sendBtn">Send</button></div>
   </div>
-
   <div class="right-panel">
     <div class="card-box" id="lastCard">
       <h4>📌 Last Message</h4>
@@ -66,8 +53,6 @@ body{
       <div style="display:flex;flex-direction:column;gap:8px">
         <div class="card" style="min-width:auto;text-align:left" onclick="quickAsk('Hostel price in Ayeduase?')">🏠 Hostel Prices</div>
         <div class="card" style="min-width:auto;text-align:left" onclick="quickAsk('What is KNUST hall fees 2167.80?')">💰 Hall Fees 2167</div>
-        <div class="card" style="min-width:auto;text-align:left" onclick="quickAsk('Cut off for Computer Science?')">📚 Cut-off Points</div>
-        <div class="card" style="min-width:auto;text-align:left" onclick="quickAsk('Calculate my CWA')">📊 Calculate CWA</div>
       </div>
     </div>
   </div>
@@ -83,34 +68,15 @@ body{
 <div class="card" onclick="quickAsk('Hostels')"><b>🏠 Hostels</b></div>
 <div class="card" onclick="quickAsk('Fees')"><b>💰 Fees</b></div>
 <div class="card" onclick="quickAsk('Courses')"><b>📚 Courses</b></div>
-<div class="card" onclick="quickAsk('Calculate my CWA')"><b>📊 CWA</b></div>
 </div>
-
 <script>
-function quickAsk(text){
-  const i=document.getElementById('q');
-  i.value=text;
-  send();
-}
+function quickAsk(text){ const i=document.getElementById('q'); i.value=text; send(); }
 async function send(){
-  const input=document.getElementById('q');
-  const box=document.getElementById('messages');
-  const last=document.getElementById('lastMsg');
-  const text=input.value.trim();
-  if(!text) return;
-  const u=document.createElement('div'); u.className='msg user'; u.textContent=text;
-  box.appendChild(u); input.value=''; 
-  if(last) last.textContent=text;
-  box.scrollTop=box.scrollHeight;
-  const load=document.createElement('div'); load.className='msg bot'; load.textContent='CampusAI dey type...';
-  box.appendChild(load); box.scrollTop=box.scrollHeight;
-  try{
-    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
-    const d=await r.json();
-    load.textContent=d.reply||d.error||'Error, try again';
-    if(last && d.reply) last.textContent=d.reply.substring(0,90)+'...';
-  }catch(e){ load.textContent='Network error, try again'; }
-  box.scrollTop=box.scrollHeight;
+  const input=document.getElementById('q'); const box=document.getElementById('messages'); const last=document.getElementById('lastMsg');
+  const text=input.value.trim(); if(!text) return;
+  const u=document.createElement('div'); u.className='msg user'; u.textContent=text; box.appendChild(u); input.value=''; if(last) last.textContent=text;
+  box.scrollTop=box.scrollHeight; const load=document.createElement('div'); load.className='msg bot'; load.textContent='CampusAI dey type...'; box.appendChild(load); box.scrollTop=box.scrollHeight;
+  try{ const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})}); const d=await r.json(); load.textContent=d.reply||d.error||'Error, try again'; if(last && d.reply) last.textContent=d.reply.substring(0,90)+'...'; }catch(e){ load.textContent='Network error, try again'; } box.scrollTop=box.scrollHeight;
 }
 document.getElementById('sendBtn')?.addEventListener('click',send);
 document.getElementById('q')?.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
