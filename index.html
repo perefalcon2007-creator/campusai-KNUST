@@ -63,11 +63,27 @@ body{
       <button id="sendBtn">Send</button>
     </div>
 
-    <!-- THE 3 QUICK ACTIONS BELOW CHAT BOT -->
-    <div class="quick-row">
-      <div class="q-card" onclick="quickAsk('Hostel price in Ayeduase?')">🏠 Hostel Prices</div>
-      <div class="q-card" onclick="quickAsk('KNUST hall fees 2167.80')">💰 Hall Fees 2167</div>
-      <div class="q-card" onclick="quickAsk('Calculate my CWA')">📊 Calculate CWA</div>
+    </div> <!-- closes input-area -->
+
+  </div> <!-- closes chat-box -->
+</div> <!-- closes center-wrap -->
+
+<!-- RIGHT = LAST MESSAGE + QUICK ACTIONS -->
+<div class="right-panel">
+  <div class="card-box">
+    <div style="font-weight:600;">📌 Last Message</div>
+    <div id="lastMessageBox" style="font-size:13px; margin-top:8px; color:#555;">Show me</div>
+  </div>
+
+  <div class="card-box">
+    <div style="font-weight:600; margin-bottom:8px;">⚡ Quick Actions</div>
+    <div class="q-card" onclick="quickAsk('Hostel price in Ayeduase')">🏨 Hostel Prices</div>
+    <div class="q-card" onclick="quickAsk('KNUST hall fees')" style="margin-top:8px;">💰 Hall Fees 2167</div>
+    <div class="q-card" onclick="quickAsk('Calculate my CWA')" style="margin-top:8px;">🎓 Calculate CWA</div>
+  </div>
+</div>
+
+</div> <!-- closes main-wrap -->
     </div>
   </div>
 
