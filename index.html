@@ -1,17 +1,21 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CampusAI KNUST - Hostel Prices, Fees & Courses | Built by PereFalc 2026/27</title>
-<meta name="description" content="Student guide for KNUST freshers. Check real hostel prices in Ayeduase/Kotei, traditional hall fees 2167.80, admissions. Built by PereFalc from Kumasi.">
-<meta name="google-site-verification" content="LndZFcSwkIrQq2BOFwRQS9KB1j6L2ooKMxwjQAQ9zuo" />
+<title>CampusAI KNUST</title>
 <link rel="stylesheet" href="./cwa.css">
- <style>
+<style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{margin:0;font-family:system-ui;background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./knust-gate.jpg');background-size: cover;background-position: center top;background-repeat: no-repeat;background-attachment: fixed;min-height:100vh;}
+body{
+  margin:0;
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./knust-gate.jpg');
+  background-size: cover;background-position: center top;background-repeat: no-repeat;background-attachment: fixed;
+  min-height:100vh;
+}
 .header{color:white;text-align:center;margin:20px 0}
-.main-wrap{width:95%;max-width:1100px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
-.chat-box{flex:2;background:white;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column;height:500px}
+.main-wrap{width:98%;max-width:1450px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
+.left-panel{flex:0 0 340px;position:sticky;top:20px}
+.chat-box{flex:1;background:white;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column;height:560px;min-width:360px}
 .chat-top{padding:12px 18px;background:#f8f9fa;border-bottom:1px solid #eee;font-weight:700;display:flex;justify-content:space-between}
 .messages{flex:1;padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
 .msg{padding:10px 14px;border-radius:18px;max-width:85%;font-size:14px;line-height:1.4;white-space:pre-wrap}
@@ -20,67 +24,54 @@ body{margin:0;font-family:system-ui;background-image: linear-gradient(rgba(0,0,0
 .input-area{padding:14px;border-top:1px solid #eee;display:flex;gap:10px}
 .input-area input{flex:1;padding:12px 16px;border-radius:999px;border:1px solid #ddd;outline:none}
 .input-area button{padding:12px 20px;border-radius:999px;border:none;background:#2563eb;color:white;font-weight:700;cursor:pointer}
-.right-panel{flex:1;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px}
+.right-panel{flex:0 0 300px;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px}
 .card-box{background:white;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-.card-box h4{font-size:12px;letter-spacing:1px;color:#64748b;margin-bottom:10px;text-transform:uppercase}
-.last-msg{font-size:13px;color:#334155;line-height:1.5;background:#f8fafc;padding:12px;border-radius:10px;border:1px solid #e2e8f0}
-.cards{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;justify-content:center}
-.card{background:white;border-radius:10px;padding:12px 16px;text-align:center;min-width:130px;cursor:pointer}
-@media(max-width:850px){.main-wrap{flex-direction:column}.chat-box{width:100%;height:65vh}.right-panel{width:100%;position:static}}
+@media(max-width:1100px){.main-wrap{flex-direction:column}.left-panel,.chat-box,.right-panel{width:100%;position:static}}
 </style>
 </head>
 <body>
-<div class="header"><h1>CampusAI 🎓</h1><p>Built by PereFalc - CampusAI KNUST 2026/2027</p>
-<div id="globalTop" style="max-width:1100px;margin:12px auto 0;padding:0 10px"></div>
-</div>
+<div class="header"><h1>CampusAI 🎓</h1><p>Built by PereFalc - KNUST 2026/27</p></div>
+
 <div class="main-wrap">
+
+  <!-- LEFT = YOUR CWA CALCULATOR (Independent) -->
+  <div class="left-panel">
+    <div id="cwaCalculator"></div>
+    <!-- Your cwa.js will automatically fill this div -->
+  </div>
+
+  <!-- MIDDLE = CHAT (Shifted Right) -->
   <div class="chat-box">
-    <div class="chat-top"><span>🟢 CampusAI - Live</span><span style="font-size:11px;color:#22c55e">● Global Mode</span></div>
-    <div class="messages" id="messages"><div class="msg bot">Hi! I'm your KNUST guide. Ask me about hostels, cut-off, fees, courses... 🇬🇭</div></div>
-    <div class="input-area"><input id="q" placeholder="Type: what is hostel price in Ayeduase?"><button id="sendBtn">Send</button></div>
+    <div class="chat-top"><span>🟢 CampusAI - Live</span><span style="font-size:11px;color:#22c55e">● Global</span></div>
+    <div class="messages" id="messages"><div class="msg bot">Hi! I'm your KNUST guide. Ask about hostels, fees, cut-off... 🇬🇭</div></div>
+    <div class="input-area"><input id="q" placeholder="Ask something..."><button id="sendBtn">Send</button></div>
   </div>
+
+  <!-- RIGHT = QUICK ACTIONS -->
   <div class="right-panel">
-    <div class="card-box" id="lastCard">
-      <h4>📌 Last Message</h4>
-      <div class="last-msg" id="lastMsg">No message yet. Start chatting on the left! 👈</div>
-    </div>
-    <div class="card-box">
-      <h4>📢 Live Announcements</h4>
-      <div id="announceList" style="font-size:13px;color:#475569">No announcement yet.</div>
-    </div>
-    <div class="card-box">
-      <h4>⚡ Quick Actions</h4>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div class="card" style="min-width:auto;text-align:left" onclick="quickAsk('Hostel price in Ayeduase?')">🏠 Hostel Prices</div>
-        <div class="card" style="min-width:auto;text-align:left" onclick="quickAsk('What is KNUST hall fees 2167.80?')">💰 Hall Fees 2167</div>
-      </div>
+    <div class="card-box"><h4>📌 Last Message</h4><div id="lastMsg" style="font-size:13px;background:#f8fafc;padding:10px;border-radius:10px">No message yet.</div></div>
+    <div class="card-box"><h4>⚡ Quick Actions</h4>
+      <div onclick="quickAsk('Hostel price in Ayeduase?')" style="padding:10px;border:1px solid #eee;border-radius:8px;margin-bottom:8px;cursor:pointer">🏠 Hostel Prices</div>
+      <div onclick="quickAsk('KNUST hall fees 2167.80')" style="padding:10px;border:1px solid #eee;border-radius:8px;cursor:pointer">💰 Hall Fees 2167</div>
     </div>
   </div>
+
 </div>
-<div style="max-width:1100px;margin:12px auto 0 auto;padding:12px 14px;border:1px solid #0A6CB6;background:#0A6CB6;border-radius:12px;font-size:13px;line-height:1.5;color:#ffffff">
-<b>⚠️ Disclaimer:</b> CampusAI is an independent AI assistant built to help KNUST students. Hostel prices, admissions info & fees may change. Always confirm from official KNUST sources.
-<br><br>
-<b>Built by PereFalc</b> — KNUST 2026/2027<br>
-📧 perefalcon2007@yahoo.com| 📍 Kumasi
-</div>
-<div class="cards">
-<div class="card" onclick="quickAsk('Admissions')"><b>🎓 Admissions</b></div>
-<div class="card" onclick="quickAsk('Hostels')"><b>🏠 Hostels</b></div>
-<div class="card" onclick="quickAsk('Fees')"><b>💰 Fees</b></div>
-<div class="card" onclick="quickAsk('Courses')"><b>📚 Courses</b></div>
-</div>
+
 <script>
-function quickAsk(text){ const i=document.getElementById('q'); i.value=text; send(); }
+function quickAsk(t){document.getElementById('q').value=t; send();}
 async function send(){
   const input=document.getElementById('q'); const box=document.getElementById('messages'); const last=document.getElementById('lastMsg');
   const text=input.value.trim(); if(!text) return;
-  const u=document.createElement('div'); u.className='msg user'; u.textContent=text; box.appendChild(u); input.value=''; if(last) last.textContent=text;
-  box.scrollTop=box.scrollHeight; const load=document.createElement('div'); load.className='msg bot'; load.textContent='CampusAI dey type...'; box.appendChild(load); box.scrollTop=box.scrollHeight;
-  try{ const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})}); const d=await r.json(); load.textContent=d.reply||d.error||'Error, try again'; if(last && d.reply) last.textContent=d.reply.substring(0,90)+'...'; }catch(e){ load.textContent='Network error, try again'; } box.scrollTop=box.scrollHeight;
+  const u=document.createElement('div'); u.className='msg user'; u.textContent=text; box.appendChild(u); input.value=''; last.textContent=text;
+  box.scrollTop=box.scrollHeight; const load=document.createElement('div'); load.className='msg bot'; load.textContent='Typing...'; box.appendChild(load);
+  try{ const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})}); const d=await r.json(); load.textContent=d.reply||'Error'; }catch(e){ load.textContent='Network error'; } box.scrollTop=box.scrollHeight;
 }
-document.getElementById('sendBtn')?.addEventListener('click',send);
-document.getElementById('q')?.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+document.getElementById('sendBtn').addEventListener('click',send);
+document.getElementById('q').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 </script>
+
+<!-- YOUR CALCULATOR FILES - Independent -->
 <script src="./cwa.js"></script>
 </body>
 </html>
