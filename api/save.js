@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const { title, category, description, file } = req.body;
     if(!title) return res.status(400).json({error:'Title required'});
     const token = process.env.GITHUB_TOKEN;
-    const repo = "trey-cyber/campusai-KNUST";
+    const repo = "perefalcon2007-creator/campusai-KNUST";
     const path = "resources.json";
     
     // 1. Get current file + SHA from GitHub (server side, with token = no block)
