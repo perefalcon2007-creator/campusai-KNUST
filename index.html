@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CampusAI KNUST - Hostel Prices, Fees & Courses | Built by PereFalc 2026/27</title>
-<meta name="description" content="Official student guide for KNUST freshers. Check real hostel prices in Ayeduase/Kotei, traditional hall fees 2167.80, admissions. Built by PereFalc from Kumasi.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CampusAI KNUST - Hostel Prices, Hall Fees & Cut-off 2026/27</title>
+<meta name="description" content="Independent student guide for KNUST. Check Ayeduase/Kotei hostel prices, traditional hall fees 2167.80, cut-off points and courses. Built by PereFalc in Kumasi.">
+<meta property="og:title" content="CampusAI KNUST - Hostel Prices & Fees 2026/27">
+<meta property="og:description" content="Ask about real Ayeduase/Kotei hostel prices, 2167.80 hall fees, cut-off points. Built by students in Kumasi.">
+<meta property="og:image" content="./knust-gate.jpg">
+<meta property="og:type" content="website">
 <meta name="google-site-verification" content="LndZFcSwkIrQq2BOFwRQS9KB1j6L2ooKMxwjQAQ9zuo" />
- <style>
+<style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
 body{
   margin:0;
   font-family:system-ui;
-  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./knust-gate.jpg');
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('./knust-gate.webp');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   min-height:100vh;
 }
 .header{color:white;text-align:center;margin:20px 0}
@@ -35,27 +39,34 @@ body{
 .cards{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;justify-content:center}
 .card{background:white;border-radius:10px;padding:12px 16px;text-align:center;min-width:130px;cursor:pointer}
 .footer{margin-top:18px;color:white;opacity:.9;font-size:11px;text-align:center}
-@media(max-width:850px){.main-wrap{flex-direction:column}.chat-box{width:100%;height:65vh}.right-panel{width:100%;position:static}}
+@media(max-width:850px){.main-wrap{flex-direction:column}.chat-box{width:100%;height:65vh}.right-panel{width:100%;position:static} body{background-attachment: scroll;}}
 </style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"What is hostel price in Ayeduase 2026/27?","acceptedAnswer":{"@type":"Answer","text":"Ayeduase hostels range from GHS 2500 to 6000 per academic year depending on occupancy and amenities. Always confirm with caretaker."}},
+    {"@type":"Question","name":"What is KNUST traditional hall fee 2167.80?","acceptedAnswer":{"@type":"Answer","text":"The reported traditional hall fee for 2026/27 is GHS 2167.80. Confirm on official KNUST student portal as fees may change."}}
+  ]
+}
+</script>
 </head>
 <body>
-<div class="header"><h1>CampusAI 🎓</h1><p>Built by PereFalc - CampusAI KNUST 2026/2027</p>
-<!-- GLOBAL ANNOUNCEMENT WILL SHOW HERE FOR ALL STUDENTS -->
+<div class="header"><h1>CampusAI 🎓</h1><p>Independent Guide by PereFalc - KNUST 2026/2027</p>
 <div id="globalTop" style="max-width:1100px;margin:12px auto 0;padding:0 10px"></div>
 </div>
 
 <div class="main-wrap">
-  <!-- LEFT SIDE = CHATTING (as you have) -->
   <div class="chat-box">
-    <div class="chat-top"><span>🟢 CampusAI - Live</span><span style="font-size:11px;color:#22c55e">● Global Mode</span></div>
+    <div class="chat-top"><span>🟢 CampusAI - Live</span><span style="font-size:11px;color:#22c55e">● Live</span></div>
     <div class="messages" id="messages"><div class="msg bot">Hi! I'm your KNUST guide. Ask me about hostels, cut-off, fees, courses... 🇬🇭</div></div>
     <div class="input-area"><input id="q" placeholder="Type: what is hostel price in Ayeduase?"><button id="sendBtn">Send</button></div>
   </div>
 
-  <!-- RIGHT SIDE = FREE SPACE YOU SAID -> LAST MESSAGE + INFO -->
   <div class="right-panel">
     <div class="card-box" id="lastCard">
-      <h4>📌 Last Message</h4>
+      <h4>📌 Last Answer</h4>
       <div class="last-msg" id="lastMsg">No message yet. Start chatting on the left! 👈</div>
     </div>
     <div class="card-box">
@@ -72,11 +83,10 @@ body{
     </div>
   </div>
 </div>
-<div style="max-width:1100px;margin:12px auto 0 auto;padding:12px 14px;border:1px solid #0A6CB6;background:#0A6CB6;border-radius:12px;font-size:13px;line-height:1.5;color:#ffffff">
+<div style="max-width:1100px;margin:12px auto 0 auto;padding:12px 14px;border:1px solid #e2e8f0;background:white;border-radius:12px;font-size:12px;line-height:1.5;color:#334155">
 <b>⚠️ Disclaimer:</b> CampusAI is an independent AI assistant built to help KNUST students. Hostel prices, admissions info & fees may change. Always confirm from official KNUST sources.
 <br><br>
-<b>Built by PeraFalc</b> — KNUST 2026/2027<br>
-📧 perefalcon2007@yahoo.com| 📍 Kumasi
+<b>Built by PereFalc</b> — KNUST 2026/2027 | 📍 Kumasi
 </div>
 <div class="cards">
 <div class="card" onclick="quickAsk('Admissions')"><b>🎓 Admissions</b></div>
@@ -87,7 +97,6 @@ body{
 
 <script>
 function quickAsk(text){
-
   const i=document.getElementById('q');
   i.value=text;
   send();
@@ -100,7 +109,6 @@ async function send(){
   if(!text) return;
   const u=document.createElement('div'); u.className='msg user'; u.textContent=text;
   box.appendChild(u); input.value=''; 
-  if(last) last.textContent=text;
   box.scrollTop=box.scrollHeight;
   const load=document.createElement('div'); load.className='msg bot'; load.textContent='CampusAI dey type...';
   box.appendChild(load); box.scrollTop=box.scrollHeight;
@@ -108,7 +116,7 @@ async function send(){
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
     const d=await r.json();
     load.textContent=d.reply||d.error||'Error, try again';
-    if(last && d.reply) last.textContent=d.reply.substring(0,90)+'...';
+    if(last && d.reply) last.textContent=d.reply.substring(0,120)+'...';
   }catch(e){ load.textContent='Network error, try again'; }
   box.scrollTop=box.scrollHeight;
 }
