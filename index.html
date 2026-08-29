@@ -40,7 +40,7 @@ body{
 .card-box{background:white;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
 
 /* Fully Responsive Breakdown Rules */
-@media(max-width:900px){
+@media(max-width:1100px){
   .main-wrap{flex-direction:column}
   .left-panel,.chat-box,.right-panel{width:100%;position:static;flex:none}
 }
@@ -65,13 +65,13 @@ body{
   <!-- New: Micro-interaction button for Voice Input -->
   <button id="voiceBtn" title="Speak to AI" type="button" style="padding: 12px; border-radius: 999px; border: none; background: #f1f5f9; color: #0f172a; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; transition: all 0.2s ease;">🎙️</button>
   <button id="sendBtn">Send</button>
+ </div>
 </div>
+  
 
   <!-- RIGHT = QUICK ACTIONS -->
   <div class="right-panel">
     <div class="card-box"><h4>⚡ Quick Actions</h4>
-
-      
       <div onclick="quickAsk('Hostel price in Ayeduase?')" style="padding:10px;border:1px solid #eee;border-radius:8px;margin-bottom:8px;cursor:pointer">🏠 Hostel Prices</div>
       <div onclick="quickAsk('KNUST hall fees')" style="padding:10px;border:1px solid #eee;border-radius:8px;cursor:pointer">💰 Hall Fees </div>
     </div>
