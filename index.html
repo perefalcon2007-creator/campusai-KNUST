@@ -1,83 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CampusAI - KNUST</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CampusAI KNUST</title>
+<link rel="stylesheet" href="./cwa.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
 body{
+  margin:0;
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./knust-gate.jpg');
+  background-size: cover;background-position: center top;background-repeat: no-repeat;background-attachment: fixed;
   min-height:100vh;
-  padding:16px;
-  background: linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.85)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920') center/cover fixed;
 }
-.main-wrap{display:flex; gap:16px; align-items:flex-start; justify-content:center; flex-wrap:wrap;}
-.left-panel{flex:0 0 340px; background:#0f172a; border-radius:20px; padding:22px; color:white; box-shadow:0 10px 30px rgba(0,0,0,0.3);}
-.center-wrap{flex:1; max-width:720px; min-width:360px; background:white; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); overflow:hidden; display:flex; flex-direction:column; height:86vh;}
-.right-panel{flex:0 0 300px; display:flex; flex-direction:column; gap:12px;}
-.card-box{background:white; border-radius:16px; padding:16px; box-shadow:0 4px 15px rgba(0,0,0,0.08);}
-.chat-top{padding:14px 16px; font-weight:600; font-size:14px; border-bottom:1px solid #eee; background:#fafafa;}
-.messages{flex:1; padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;}
-.msg{padding:10px 14px; border-radius:16px; max-width:82%; font-size:14px; line-height:1.4;}
-.msg.bot{background:#f1f5f9; align-self:flex-start;}
-.msg.user{background:#2563eb; color:white; align-self:flex-end;}
-.input-area{display:flex; gap:8px; padding:12px; border-top:1px solid #eee; align-items:center; background:white;}
-.input-area input#q{flex:1; padding:12px 16px; border-radius:24px; border:1px solid #ddd; outline:none;}
-#sendBtn{background:#2563eb; color:white; padding:10px 18px; border-radius:20px; border:none; font-weight:600; cursor:pointer;}
-#voiceBtn{width:42px; height:42px; border-radius:50%; background:white; border:1px solid #ddd; font-size:18px; cursor:pointer;}
-.q-card{padding:10px 12px; border-radius:10px; background:#f8fafc; border:1px solid #eef2f7; font-size:13px; cursor:pointer;}
-.q-card:hover{background:#eff6ff;}
+.header{color:white;text-align:center;margin:20px 0}
+.main-wrap{width:98%;max-width:1450px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
 
-/* CWA NORMAL SIZE - FIXED */
-#cwa-calculator h3{color:#f59e0b; font-size:18px; margin-bottom:4px;}
-.cwa-label{font-size:11px; color:#94a3b8; margin-top:12px; display:block; text-transform:uppercase; letter-spacing:0.5px;}
-.cwa-input{width:100%; padding:10px 12px; border-radius:10px; border:1px solid #334155; background:#1e293b; color:white; margin-top:4px; outline:none;}
-.cwa-input:focus{border-color:#f59e0b;}
-.btn-blue{background:#f59e0b; color:#000; width:100%; padding:12px; border-radius:12px; font-weight:700; border:none; cursor:pointer; margin-top:16px;}
-.cwa-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0;}
-.cwa-item{background:#1e293b; border-radius:12px; padding:12px; text-align:center;}
-.cwa-item small{display:block; color:#94a3b8; font-size:10px; margin-bottom:4px;}
-.cwa-item b{font-size:18px; color:white;}
+/* Modern Left Dashboard Column Setup */
+.left-panel {
+  flex: 0 0 350px; /* Slight extra room for standard desktop input paddings */
+  position: sticky;
+  top: 20px;
+}
 
-@media(max-width:1100px){.main-wrap{flex-direction:column;} .left-panel,.center-wrap,.right-panel{width:100%; flex:1 1 100%; max-width:100%;} .center-wrap{height:70vh;}}
+/* Fallback card frame style to isolate components beautifully over the background image */
+#cwa-calculator {
+  width: 100%;
+}
+
+.chat-box{flex:1;background:white;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column;height:560px;min-width:360px}
+.chat-top{padding:12px 18px;background:#f8f9fa;border-bottom:1px solid #eee;font-weight:700;display:flex;justify-content:space-between}
+.messages{flex:1;padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.msg{padding:10px 14px;border-radius:18px;max-width:85%;font-size:14px;line-height:1.4;white-space:pre-wrap}
+.bot{background:#f1f5f9;align-self:flex-start}
+.user{background:#2563eb;color:white;align-self:flex-end}
+.input-area{padding:14px;border-top:1px solid #eee;display:flex;gap:10px}
+.input-area input{flex:1;padding:12px 16px;border-radius:999px;border:1px solid #ddd;outline:none}
+.input-area button{padding:12px 20px;border-radius:999px;border:none;background:#2563eb;color:white;font-weight:700;cursor:pointer}
+.right-panel{flex:0 0 300px;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px}
+.card-box{background:white;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+
+/* Fully Responsive Breakdown Rules */
+@media(max-width:1100px){
+  .main-wrap{flex-direction:column}
+  .left-panel,.chat-box,.right-panel{width:100%;position:static;flex:none}
+}
 </style>
 </head>
 <body>
+<div class="header"><h1>CampusAI 🎓</h1><p>Built by PereFalc - KNUST 2026/27</p></div>
 
 <div class="main-wrap">
 
-  <!-- LEFT - CWA NORMAL SIZE BACK -->
+  <!-- LEFT = YOUR CWA CALCULATOR (Target ID unified to handle cwa.js queries natively) -->
   <div class="left-panel">
-    <div id="cwa-calculator">
-      <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
-        <div style="background:#1e293b; padding:8px; border-radius:8px;">📊</div>
-        <div>
-          <h3>CWA Goal Strategist</h3>
-          <p style="font-size:11px; color:#94a3b8;">Compute semester grade requirements instantly</p>
-        </div>
-      </div>
+    <div id="cwa-calculator"></div>
+  </div>
 
-      <label class="cwa-label">Current CWA</label>
-      <input class="cwa-input" id="curCWA" value="65">
+  <!-- MIDDLE = CHAT (Shifted Right) -->
+  <div class="chat-box">
+    <div class="chat-top"><span>🟢 CampusAI - Live</span><span style="font-size:11px;color:#22c55e">● Global</span></div>
+    <div class="messages" id="messages"><div class="msg bot">Hi! I'm your KNUST guide. Ask about hostels, fees, cut-off... 🇬🇭</div></div>
+    <div class="input-area"><input id="q" placeholder="Ask something..."><button id="sendBtn">Send</button></div>
+  </div>
 
-      <label class="cwa-label">Completed Credits</label>
-      <input class="cwa-input" id="compCred" value="34">
-
-      <label class="cwa-label">Current Credits</label>
-      <input class="cwa-input" value="14">
-
-      <label class="cwa-label">Target CWA Goal</label>
-      <input class="cwa-input" value="70">
-
-      <button class="btn-blue">Generate Strategy Blueprint</button>
-
-      <div style="margin-top:14px; padding:12px; background:#1e293b; border-radius:10px; font-size:11px; color:#94a3b8; line-height:1.5;">
-        💡 Required Avg: 78.5 for 70.0 Goal<br>
-        CWA Scale: 0-100 | KNUST System
-      </div>
+  <!-- RIGHT = QUICK ACTIONS -->
+  <div class="right-panel">
+    <div class="card-box"><h4>📌 Last Message</h4><div id="lastMsg" style="font-size:13px;background:#f8fafc;padding:10px;border-radius:10px">No message yet.</div></div>
+    <div class="card-box"><h4>⚡ Quick Actions</h4>
+      <div onclick="quickAsk('Hostel price in Ayeduase?')" style="padding:10px;border:1px solid #eee;border-radius:8px;margin-bottom:8px;cursor:pointer">🏠 Hostel Prices</div>
+      <div onclick="quickAsk('KNUST hall fees 2167.80')" style="padding:10px;border:1px solid #eee;border-radius:8px;cursor:pointer">💰 Hall Fees 2167</div>
     </div>
   </div>
 
-  <!-- CENTER -->
-  <div class="center-wrap">
-    <div style
+</div>
+
+<script>
+function quickAsk(t){document.getElementById('q').value=t; send();}
+async function send(){
+  const input=document.getElementById('q'); const box=document.getElementById('messages'); const last=document.getElementById('lastMsg');
+  const text=input.value.trim(); if(!text) return;
+  const u=document.createElement('div'); u.className='msg user'; u.textContent=text; box.appendChild(u); input.value=''; last.textContent=text;
+  box.scrollTop=box.scrollHeight; const load=document.createElement('div'); load.className='msg bot'; load.textContent='Typing...'; box.appendChild(load);
+  try{ const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})}); const d=await r.json(); load.textContent=d.reply||'Error'; }catch(e){ load.textContent='Network error'; } box.scrollTop=box.scrollHeight;
+}
+document.getElementById('sendBtn').addEventListener('click',send);
+document.getElementById('q').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+</script>
+
+<!-- YOUR CALCULATOR FILES - Independent -->
+<script src="./cwa.js"></script>
+</body>
+</html>
