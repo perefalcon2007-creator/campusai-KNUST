@@ -1,0 +1,239 @@
+/**
+ * CampusAI KNUST - Style Architecture
+ * Layout: Advanced Glassmorphism with Strict Mobile-First Boundaries
+ * Author: Pere Falc
+ */
+
+/* Isolated Container Base Layout */
+#cwa-calculator {
+  width: 100%;
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Glassmorphic Panel Design */
+.cwa-glass-container {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+  color: #f8fafc;
+}
+
+/* Header Context Group */
+.cwa-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.cwa-title-icon {
+  font-size: 1.75rem;
+  background: rgba(251, 191, 36, 0.15);
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cwa-header h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fbbf24; /* Core KNUST Gold Accent */
+}
+
+.cwa-header p {
+  margin: 4px 0 0 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+/* Form Entry Framework */
+.cwa-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cwa-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cwa-input-wrapper label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+}
+
+.cwa-input-wrapper input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.cwa-input-wrapper input:focus {
+  outline: none;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+/* Modern Primary Action Control */
+.cwa-btn-submit {
+  background: #fbbf24;
+  color: #0f172a;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+}
+
+.cwa-btn-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.35);
+  filter: brightness(1.05);
+}
+
+.cwa-btn-submit:active {
+  transform: translateY(1px);
+}
+
+/* Result Visualization Cards */
+.cwa-result-wrapper {
+  margin-top: 24px;
+  animation: cwaScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.cwa-hidden {
+  display: none !important;
+}
+
+.cwa-response-card {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cwa-response-card h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Structural Accent States */
+.cwa-optimal h4 { color: #4ade80; }
+.cwa-moderate h4 { color: #60a5fa; }
+.cwa-critical h4 { color: #f87171; }
+.cwa-impossible h4 { color: #ef4444; }
+.cwa-coasting h4 { color: #a78bfa; }
+
+.cwa-highlight-stat {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin: 0 0 8px 0;
+}
+
+.cwa-highlight-stat span {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: block;
+  margin-top: 4px;
+}
+
+.cwa-brief {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.cwa-divider {
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 16px 0;
+}
+
+.cwa-motivation {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #f1f5f9;
+}
+
+.cwa-tip {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* Alerts System Layout */
+.cwa-alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.cwa-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+/* Performance Micro-Animations */
+@keyframes cwaScaleIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Strict Mobile Adaptability Override (Laptops down to standard smartphone widths) */
+@media (max-width: 480px) {
+  .cwa-form-grid {
+    grid-template-columns: 1fr; /* Stack into single column seamlessly on narrow mobile layouts */
+    gap: 12px;
+  }
+  
+  .cwa-glass-container {
+    padding: 18px;
+  }
+  
+  .cwa-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .cwa-highlight-stat span {
+    font-size: 1.5rem;
+  }
+}
